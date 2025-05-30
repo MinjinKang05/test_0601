@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="ko">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   참좋은여행
+  </title>
+  <style>
+   * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans KR', sans-serif; color: #333; background: #fff; }
+    a { text-decoration: none; color: inherit; }
+
+    header {
+      background: white;
+      border-bottom: 1px solid #ddd;
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: auto;
+      padding: 0 20px;
+    }
+
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      font-size: 15px;
+    }
+
+.main-visual {
+  background: url('image/np_main_14489.jpg') no-repeat center center / cover;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: white;
+  font-size: 36px;
+  font-weight: bold;
+  position: relative;
+}
+
+
+    .main-visual::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(58, 57, 57, 0.4);
+    }
+
+
+.main-visual .container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.main-visual::after,
+.slide::after,
+.slide .gradient-overlay {
+  display: none !important; /* 더 이상 필요 없음 */
+}
+
+    section {
+      padding: 60px 0;
+    }
+
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+
+    .slide.active {
+  opacity: 1;
+  z-index: 0; /* ::before보다 아래로 설정 */
+}
+
+    .search-wrapper {
+    position: relative;
+    width: 300px;
+    height: 40px;
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 40px 0 16px;
+  }
+
+  .search-wrapper input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .search-wrapper img {
+    position: absolute;
+    right: 14px;
+    width: 18px;
+    height: 18px;
+    opacity: 0.6;
+    cursor: pointer;
+  }
+
+.gradient-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0,0,0,00.5) 15%, rgba(0,0,0,0) 50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.slide::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(to right, rgba(0,0,0,0.5) 20%, rgba(0,0,0,0) 60%);
+  z-index: 1;
+}
+
+
+/* 2. slide 내부의 중복된 그라데이션 제거 */
+.slide::after,
+.slide .gradient-overlay {
+  display: none !important;
+}
+
+    .grid-3, .grid-4, .grid-5 {
+      display: grid;
+      gap: 20px;
+    }
+
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-5 { grid-template-columns: repeat(5, 1fr); }
+
+    .card {
+      background: #f9f9f9;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.103);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card img {
+  width: 100%;
+  height: 220px; /* 기존 160px → 220px 이상으로 변경 */
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-slider {
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+.card-list {
+  display: flex;
+  gap: 40px;
+  margin: 0 auto; /* ✅ 중앙 정렬 */
+  width: max-content; /* 카드들이 자기 너비만큼만 차지하게 */
+}
+
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .card-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .card-text {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .price {
+      color: crimson;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .banner {
+      background: #007bff;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 20px;
+      border-radius: 10px;
+      margin: 60px 0;
+    }
+
+    footer {
+      background: #f5f5f5;
+      font-size: 14px;
+      color: #777;
+      padding: 40px 20px;
+    }
+
+.grid-3 {
+  display: flex;
+  gap: 40px; /* 기존보다 간격을 더 넓게 */
+  overflow-x: auto; /* 슬라이드 구조라면 꼭 필요해 */
+  scroll-behavior: smooth;
+  padding: 0px; /* 여유 공간 */
+}
+
+    
+    .main-visual {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+}
+
+.main-visual-text.left {
+  position: absolute;
+  top: 30%;
+  right: 80px; /* ✅ 이 줄을 추가해! */
+  left: auto;  /* ✅ 이 줄도 꼭 추가해줘야 left 값이 무효화돼 */
+  transform: translateY(-50%);
+  z-index: 2;
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+  animation: fadeInUp 1.5s ease-out forwards;
+  opacity: 0;
+  text-align: left; /* 텍스트를 오른쪽 정렬하고 싶다면 이 줄도 */
+}
+
+.main-visual-text.left h1 {
+  font-size: 2.8rem; /* 폰트 살짝 줄임 */
+  margin-bottom: 10px;
+}
+
+.main-visual-text.left p {
+  font-size: 16px;
+  margin-bottom: 18px;
+}
+
+/* 버튼 스타일 */
+.btn-banner {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 30px;
+  transition: background 0.3s;
+}
+
+.btn-banner:hover {
+  background-color: #e85a00;
+}
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+    .video-wrapper {
+  position: relative;
+  padding-top: 56.25%; /* 16:9 비율 유지 */
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.video-row {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap; /* 화면 작을 때 줄바꿈 */
+  margin-bottom: 60px;
+}
+
+.video-card {
+  flex: 1 1 30%;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.video-card iframe {
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  border: none;
+}
+
+.video-card p {
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: 15px;
+  color: #333;
+}
+
+.main-visual-text.left h1 {
+  font-size: 2.8rem;
+  line-height: 1.3;      /* 줄 간격 */
+  letter-spacing: -0.5px; /* 자간 */
+  margin-bottom: 20px;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.intro-text {
+  padding: 60px 0;
+  background: linear-gradient(to right, #ffffff, #f0f8ff); /* 배경 넣을 경우 */
+  text-align: center;
+}
+
+.intro-text h2 {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.intro-text p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+
+
+.main-visual::after {
+  display: none; /* 필요 없다면 이렇게 제거 */
+}
+
+.main-visual {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+}
+
+/* 왼쪽에서 오른쪽으로 흐르는 그라데이션 */
+.main-visual::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(18, 123, 192, 0.5) 20%, rgba(0,0,0,0) 55%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 슬라이드 이미지 */
+.slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+  animation: zoomMove 20s infinite alternate ease-in-out;
+  z-index: 0; /* 항상 아래로 */
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* 슬라이드 안 그라데이션 제거 */
+.slide::after,
+.slide .gradient-overlay {
+  display: none !important;
+}
+
+/* 텍스트 */
+.main-visual-text.left {
+  position: absolute;
+  top: 30%;
+  left: 80px;
+  transform: translateY(-50%);
+  z-index: 2;
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+  animation: fadeInUp 1.5s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes zoomMove {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  100% {
+    transform: scale(1.05) translate(-10px, -5px);
+  }
+}
+
+.slider-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+}
+
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.icon-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.icon-item img {
+  width: 16px;
+  height: 16px;
+}
+
+.slider-wrapper {
+  padding: 0 40px;
+}
+
+/* 화살표 버튼 */
+.arrow-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ccc;
+  background: white;
+  color: #666;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 4px;
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.arrow-btn.left {
+  left: -18px;
+}
+
+.arrow-btn.right {
+  right: -18px;
+}
+
+
+.slider-wrapper {
+  position: relative;
+  padding: 0 40px;  /* 좌우 여백 추가 */
+  overflow: hidden;
+}
+
+.card-slider {
+  display: flex;
+  gap: 30px; /* 카드 사이 간격 크게 */
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 10px 0; /* 세로 여백도 살짝 */
+}
+
+.arrow-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: 1px solid #ccc;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.arrow-btn.left {
+  left: 0px; /* 위치 조정 */
+}
+
+.arrow-btn.right {
+  right: 0px; /* 위치 조정 */
+}
+
+.slider-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+  overflow: visible;  /* ✅ 카드 바깥쪽 버튼이 보이게 */
+}
+
+.card-slider {
+  overflow-x: auto;
+  padding: 0 20px;
+  scroll-behavior: smooth;
+}
+
+.card-list {
+  display: flex;
+  gap: 30px;
+  margin: 0 auto;
+  width: max-content;
+}
+
+.card {
+  flex: 0 0 280px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+
+.arrow-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: 1px solid #ccc;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.arrow-btn.left {
+  left: -60px; /* 더 왼쪽으로 밀기 */
+}
+
+.arrow-btn.right {
+  right: -60px; /* 더 오른쪽으로 밀기 */
+}
+
+.rolling-keywords {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.section-title {
+  font-size: 24px;
+  margin-bottom: 30px;
+  text-align: center; /* ✅ 가운데 정렬 */
+}
+
+.rolling-keywords .label {
+  font-weight: bold;
+  color: #00aa88;
+}
+
+.rolling-box {
+  overflow: hidden;
+  height: 20px;
+  position: relative;
+}
+
+.rolling-box ul {
+  display: flex;
+  flex-direction: column;
+  animation: rolling 10s linear infinite;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rolling-box li {
+  height: 20px;
+  line-height: 20px;
+  color: #333;
+  white-space: nowrap;
+}
+
+@keyframes rolling {
+  0% { transform: translateY(0); }
+  10% { transform: translateY(0); }
+
+  20% { transform: translateY(-20px); }
+  30% { transform: translateY(-20px); }
+
+  40% { transform: translateY(-40px); }
+  50% { transform: translateY(-40px); }
+
+  60% { transform: translateY(-60px); }
+  70% { transform: translateY(-60px); }
+
+  80% { transform: translateY(-80px); }
+  90% { transform: translateY(-80px); }
+
+  100% { transform: translateY(-100px); } /* 한 번 더 움직이면 반복됨 */
+}
+
+.popular-keyword {
+  position: relative;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+.label {
+  color:  #007bff;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.rolling-trigger {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 6px;
+}
+
+.arrow {
+  font-size: 12px;
+  color: #888;
+}
+
+.keyword-list {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  width: 140px;
+  padding: 8px 0;
+  z-index: 999;
+}
+
+.keyword-list li {
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.keyword-list li:hover {
+  background: #f3f3f3;
+}
+
+.keyword-list li strong {
+  margin-right: 6px;
+  color:  #007bff;
+}
+
+.hidden {
+  display: none;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup-box {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 420px;
+  max-width: 90%;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+  position: relative;
+}
+
+.popup-image {
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid #eee;
+}
+
+.popup-footer {
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+  font-size: 14px;
+}
+
+.popup-footer label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.popup-footer button {
+  padding: 5px 12px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 30px; /* 메뉴 간격 통일 */
+  padding-left: 0;
+  list-style: none;
+  margin-top: 10px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  font-size: 15px;
+  color: #007bff; /* 파란색 강조 */
+  cursor: pointer;
+}
+
+.menu-item img.menu-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.nav-menu a img {
+  vertical-align: middle;
+}
+
+.menu-item a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #007bff; /* 파란색 */
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.menu-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 아이콘과 글자 사이 간격 */
+  font-weight: bold;
+  font-size: 16px;
+  color: #007bff; /* 파란색 글자 */
+}
+
+.menu-icon img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+}
+
+/* 공통 제목 가운데 정렬 */
+.section-title {
+  text-align: center;
+}
+
+/* 여행의 정보와 할인혜택 섹션 제목만 왼쪽 정렬로 덮어쓰기 */
+section:nth-of-type(4) .section-title {
+  text-align: left;
+}
+
+.video-section {
+  position: relative;
+  background: linear-gradient(135deg, #f8faff, #ffffff);
+  padding: 80px 20px;
+  overflow: hidden;
+}
+
+.video-section::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  width: 180px;
+  height: 180px;
+  background: rgba(0, 123, 255, 0.1);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.video-section::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  right: -80px;
+  width: 200px;
+  height: 200px;
+  background: rgba(0, 123, 255, 0.07);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.video-section h2 {
+  font-size: 28px;
+  text-align: center;
+  font-weight: 700;
+  color: #333;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 40px;
+}
+
+.video-section h2::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 4px;
+  background: #007bff;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+
+  </style>
+ </head>
+ <body>
+  <header>
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0;">
+
+      <!-- 로고 + 검색창 -->
+      <div style="display: flex; align-items: center; gap: 20px;">
+
+        <!-- 로고 -->
+        <a href="index.html">
+          <img alt="로고" src="image/logo.png" style="height:30px;" />
+        </a>
+
+        <!-- 검색창 wrapper -->
+        <div class="search-wrapper">
+          <input type="text" placeholder="어디로 떠나고 싶으세요?" />
+          <img src="image/free-icon-magnifier-2311526.png" alt="돋보기" />
+        </div>
+<div class="popular-keyword">
+  <span class="label">인기검색어</span>
+  <div class="rolling-trigger" onclick="toggleDropdown()">
+    <span id="currentKeyword">1 장가계</span>
+    <span class="arrow">&#9662;</span>
+  </div>
+
+  <ul id="keywordDropdown" class="keyword-list hidden">
+    <li onclick="selectKeyword(1, '장가계')"><strong>1</strong> 장가계</li>
+    <li onclick="selectKeyword(2, '몽골')"><strong>2</strong> 몽골</li>
+    <li onclick="selectKeyword(3, '발리')"><strong>3</strong> 발리</li>
+    <li onclick="selectKeyword(4, '다낭')"><strong>4</strong> 다낭</li>
+    <li onclick="selectKeyword(5, '오사카')"><strong>5</strong> 오사카</li>
+    <li onclick="selectKeyword(6, '나트랑')"><strong>6</strong> 나트랑</li>
+    <li onclick="selectKeyword(7, '대마도')"><strong>7</strong> 대마도</li>
+    <li onclick="selectKeyword(8, '괌')"><strong>8</strong> 괌</li>
+    <li onclick="selectKeyword(9, '푸꾸옥')"><strong>9</strong> 푸꾸옥</li>
+    <li onclick="selectKeyword(10, '보홀')"><strong>10</strong> 보홀</li>
+  </ul>
+</div>
+
+      </div>
+
+<div style="display: flex; align-items: center; gap: 30px; font-size: 14px;">
+<div style="display: flex; align-items: center; gap: 30px;">
+  <!-- 프로모션 아이콘 -->
+  <div style="display: flex; flex-direction: column; align-items: center; font-weight: bold;">
+    <img src="image/free-icon-promotion-1139455.png"alt="프로모션" style="width: 24px; height: 24px; margin-bottom: 4px;">
+    <span>프로모션</span>
+  </div>
+
+  <!-- 로그인 아이콘 -->
+  <div style="display: flex; flex-direction: column; align-items: center; font-weight: bold;"> 
+   <!-- ✅ 올바른 형식 -->
+<img src="image/free-icon-user-4674426.png" alt="로그인" style="width: 24px; height: 24px; margin-bottom: 4px;">
+    <span>로그인</span>
+  </div>
+
+  <!-- 여행후기 아이콘 -->
+  <div style="display: flex; flex-direction: column; align-items: center; font-weight: bold;">
+    <img src="image/free-icon-reviews-5182755.png" alt="여행후기" style="width: 24px; height: 24px; margin-bottom: 4px;">
+    <span>여행후기</span>
+  </div>
+
+  <!-- 고객센터 아이콘 -->
+  <div style="display: flex; flex-direction: column; align-items: center; font-weight: bold;">
+    <img src="image/free-icon-customer-support-3758028.png" alt="고객센터" style="width: 24px; height: 24px; margin-bottom: 4px;">
+    <span>고객센터</span>
+  </div>
+</div>
+     </div>
+    </div>
+<ul class="nav-menu">
+  <li class="menu-item">
+    <a href="index.html">
+      <img src="image/free-icon-menu-3856832.png" alt="전체메뉴 아이콘" class="menu-icon" />
+      <span>전체메뉴</span>
+    </a>
+  </li>
+  <li><a href="travel_subpage_fixed.html">해외여행</a></li>
+  <li><a href="#">국내여행</a></li>
+  <li><a href="#">항공</a></li>
+  <li><a href="sub_page.html">호텔</a></li>
+  <li><a href="#">투어 / 패스</a></li>
+  <li><a href="#">하이클래스</a></li>
+</ul>
+    </ul>
+   </div>
+  </header>
+  <div class="main-visual">
+  <div class="slide active" style="background-image: url('image/638561436096718004.jpg');"></div>
+  <div class="gradient-overlay">
+</div>
+  <div class="slide" style="background-image: url('image/np_main_14537.jpg');"></div>
+  <div class="gradient-overlay">
+  </div> <!-- 고정된 그라데이션 오버레이 -->
+  <div class="container main-visual-text left">
+    <h1>하늘과 만나는 곳<br>중앙아시아</h1>
+    <p>눈부신 자연, 따뜻한 사람들과 함께하는 여행</p>
+    <a href="#recommend" class="btn-banner">지금 보러가기</a>
+  </div>
+</div>
+    </div>
+  </div>
+  <div class="container">
+  <section>
+  <h2 class="section-title">MD추천 🌴여름휴가템</h2>
+
+  <div class="slider-wrapper">
+    <button class="arrow-btn left">&lt;</button>
+
+    <div class="card-slider">
+      <div class="card-list">
+        <div class="card">
+          <img src="image/20230818500813.jpg" />
+          <div class="card-body">
+            <div class="card-title">파리 핵심 관광</div>
+            <div class="card-text">에펠탑, 루브르, 샹젤리제...</div>
+            <div class="price">2,399,000원~</div>
+          </div>
+        </div>
+        <div class="card">
+          <img src="image/3562143066.png" />
+          <div class="card-body">
+            <div class="card-title">동유럽 투어</div>
+            <div class="card-text">프라하·부다페스트·비엔나</div>
+            <div class="price">1,890,000원~</div>
+          </div>
+        </div>
+        <div class="card">
+          <img src="image/9586_ext_14_ko_0.jpg" />
+          <div class="card-body">
+            <div class="card-title">오사카 에어텔 3박4일</div>
+            <div class="card-text">자유여행 + 항공 포함</div>
+            <div class="price">699,000원~</div>
+          </div>
+        </div>
+         <div class="card">
+          <img src="image/1966911_2.jpg" />
+          <div class="card-body">
+            <div class="card-title"> 캐나다 여행 6박 8일일</div>
+            <div class="card-text">#캘거리 직항 #로키완전일주</div>
+            <div class="price">4,190,000원~</div>
+          </div>
+      </div>
+    </div>
+
+    <button class="arrow-btn right">&gt;</button>
+  </div>
+</section>
+
+   </section>
+   <section>
+    <h2 class="section-title">
+     🛩️지금이 적기! 시즌 추천여행지
+    </h2>
+    <div class="grid-5">
+     <div class="card">
+      <img src="image/img.jpg"/>
+      <div class="card-body">
+       <div class="card-title">
+        우즈베키스탄
+       </div>
+       <div class="price">
+        849,000원~
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <img src="image/92cb6276cc547053db7fda361d46d1bf.jpg"/>
+      <div class="card-body">
+       <div class="card-title">
+        튀르키예
+       </div>
+       <div class="price">
+        899,000원~
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <img src="image/1920341_2.jpg"/>
+      <div class="card-body">
+       <div class="card-title">
+        조지아/아르메니아
+       </div>
+       <div class="price">
+        2,690,000원~
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <img src="image/339baf17-96f4-4dfe-bb5b-dcaf575b9203.webp"/>
+      <div class="card-body">
+       <div class="card-title">
+        나트랑/달랏
+       </div>
+       <div class="price">
+        249,000원~
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <img src="image/ed1635ff4e5f484eb6c71e8c5bb338d5.jpg"/>
+      <div class="card-body">
+       <div class="card-title">
+        알마티
+       </div>
+       <div class="price">
+        209,000원~
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section class="banner">
+    여행을 완성하는 참좋은L♥VE - 한정 특가 지금 확인하기!
+   </section>
+   <!-- 여행의 정보와 할인혜택 -->
+   <section>
+    <h2 class="section-title">
+     여행의 정보와 할인혜택
+    </h2>
+    <div style="display: flex; gap: 30px;">
+     <div style="flex: 2; background: #f0f8ff; padding: 20px; border-radius: 8px;">
+      <strong>
+       [참 좋은 여행] 파리 핵심 여행 정보
+      </strong>
+      <p>
+       최신 여행지 소식과 꿀팁을 모두 모아 알려드려요!
+      </p>
+      
+     </div>
+     <div style="flex: 1;">
+      <h4>
+       📢 공지사항
+      </h4>
+      <ul style="font-size: 14px; line-height: 1.8; padding-left: 20px;">
+       <li>
+        여행 예약 시 유의사항 안내
+       </li>
+       <li>
+        모두투어 앱 업데이트 안내
+       </li>
+       <li>
+        고객센터 운영 시간 변경 안내
+       </li>
+      </ul>
+     </div>
+    </div>
+   </section>
+   <!-- 추천 여행지 카드 -->
+   <section>
+    <h2 class="section-title">
+     핫이슈 📢 이달의 여행지
+    </h2>
+    <div class="grid-4">
+     <div class="card">
+      <img src="image/1bff012c-8d70-4f82-95ee-506feb8d7f34.webp"/>
+      <div class="card-body">
+       <div class="card-title">
+        괌 5일
+       </div>
+       <div class="price">
+        1,990,000원~
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <img src="image/02a8f1970eeef543facf570d1d569a34.jpg"/>
+      <div class="card-body">
+       <div class="card-title">
+        사이판 자유여행
+       </div>
+       <div class="price">
+        1,923,000원~
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <img src="image/2019010214105555784_1546405855.jpg"/>
+      <div class="card-body">
+       <div class="card-title">
+        서유럽 일주
+       </div>
+       <div class="price">
+        2,990,000원~
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <img src="image/img (1).jpg"/>
+      <div class="card-body">
+       <div class="card-title">
+        지중해 크루즈
+       </div>
+       <div class="price">
+        2,790,000원~
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- 국내여행 추천 -->
+   <section>
+    <h2 class="section-title">
+     국내여행 출발 [서울/강원도/제주/남해해]
+    </h2>
+    <div class="grid-4">
+     <div class="card">
+      <img src="image/the-phenomenon-of-avoiding-Seoul-001-1024x683.jpg"/>
+      <div class="card-body">
+       <div class="card-title">
+        서울 맛집 투어
+       </div>
+       <div class="price">
+        440,000원~
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <img src="image/thumb_720_8864VHhvenUMGtZByAoSmY82.jpg"/>
+      <div class="card-body">
+       <div class="card-title">
+        강원도 캠핑
+       </div>
+       <div class="price">
+        370,000원~
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <img src="image/be0a5900d5334879936799d0f0243693.jpg"/>
+      <div class="card-body">
+       <div class="card-title">
+        제주 렌터카 투어
+       </div>
+       <div class="price">
+        270,000원~
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <img src="image/unnamed.jpg"/>
+      <div class="card-body">
+       <div class="card-title">
+        남해 힐링
+       </div>
+       <div class="price">
+        220,000원~
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- 여행 고객리뷰 -->
+   <section>
+    <h2 class="section-title">
+     믿고보는 고객 리뷰 ✍️
+    </h2>
+    <div class="grid-4">
+     <div class="card">
+      <img src="image/가이드1.jpg"/>
+      <div class="card-body">
+       <div class="card-text">
+        "가이드님 정말 친절했어요!"
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <img src="image/다운로드.jpg"/>
+      <div class="card-body">
+       <div class="card-text">
+        "패키지 구성이 만족스러웠어요."
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <img src="image/female-tourists-hand-have-happy-travel-map_1150-7409.avif"/>
+      <div class="card-body">
+       <div class="card-text">
+        "다시 이용하고 싶어요 :) "
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <img src="image/htm_20170130111051967498.jpg"/>
+      <div class="card-body">
+       <div class="card-text">
+        "아이와 함께한 첫 해외여행!"
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- 여행사 영상 -->
+   <section>
+ <section class="video-section">
+  <h2>🎥 여행지 브이로그 한눈에 보기</h2>
+  <div class="video-row">
+    <div class="video-card">
+      <iframe src="https://www.youtube-nocookie.com/embed/Vgmqf6fJAmE" 
+              title="[EP.1] 일본 여행 브이로그" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen>
+      </iframe>
+      <p>[EP.1] 일본 여행 브이로그</p>
+    </div>
+    <div class="video-card">
+      <iframe src="https://www.youtube-nocookie.com/embed/EjZ5vUg1GtM" 
+              title="[EP.2] 유럽 축제 현장!" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen>
+      </iframe>
+      <p>[EP.2] 유럽 축제 현장!</p>
+    </div>
+    <div class="video-card">
+      <iframe src="https://www.youtube-nocookie.com/embed/-qSWJ99fg8s" 
+              title="[EP.3] 사이판에서 즐기는 여유" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen>
+      </iframe>
+      <p>[EP.3] 사이판에서 즐기는 여유</p>
+    </div>
+  </div>
+</section>
+
+<!-- 📌 여기! -->
+<div id="popup" class="popup-overlay">
+  <div class="popup-box">
+    <img src="image/1ef8cf74ae124e99b55168b4e2f76176.avif" alt="팝업 이미지" class="popup-image" />
+    <div class="popup-footer">
+      <label>
+        <input type="checkbox" id="hideToday" />
+        오늘하루 보지 않기
+      </label>
+      <button id="closePopup">닫기</button>
+    </div>
+  </div>
+</div>
+
+  </div>
+  <footer>
+   <div class="container">
+    <p style="margin-bottom: 10px;">
+     © 2025 참좋은여행 | 고객센터 1234-5678 | 개인정보처리방침 | 이용약관
+    </p>
+    <p style="font-size: 13px; color: #999;">
+     사업자등록번호 123-45-67890 | 통신판매업신고 제2025-서울중구-00001호 | 대표자: 강민진
+    </p>
+   </div>
+  </footer>
+  <script>
+    
+  const slides = document.querySelectorAll(".slide");
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    slides.forEach(slide => slide.classList.remove("active"));
+    slides[index].classList.add("active");
+  }
+
+  setInterval(() => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }, 5000); // 5초마다 전환
+
+  function toggleDropdown() {
+    const dropdown = document.getElementById("rankingDropdown");
+    dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+  }
+
+  // (선택사항) 바깥 클릭 시 닫기
+  window.addEventListener("click", function (e) {
+    const box = document.querySelector(".search-ranking");
+    if (!box.contains(e.target)) {
+      document.getElementById("rankingDropdown").style.display = "none";
+    }
+  });
+
+  const keywords = [
+    '장가계', '몽골', '발리', '다낭', '백두산',
+    '나트랑', '대마도', '괌', '푸꾸옥', '보홀'
+  ];
+  let currentIndex = 0;
+  let interval;
+
+  function updateKeyword() {
+    currentIndex = (currentIndex + 1) % keywords.length;
+    document.getElementById("currentKeyword").innerText = `${currentIndex + 1} ${keywords[currentIndex]}`;
+  }
+
+  function startRolling() {
+    interval = setInterval(updateKeyword, 3000); // 3초마다 자동 롤링
+  }
+
+  function toggleDropdown() {
+    const dropdown = document.getElementById("keywordDropdown");
+    dropdown.classList.toggle("hidden");
+  }
+
+  function selectKeyword(index, name) {
+    document.getElementById("currentKeyword").innerText = `${index} ${name}`;
+    toggleDropdown();
+    clearInterval(interval); // 멈췄다가
+    setTimeout(startRolling, 5000); // 5초 뒤 재시작
+  }
+
+  window.onload = startRolling;
+window.onload = function () {
+  // ✅ 1. 인기검색어 자동 롤링 시작
+  startRolling();
+
+  // ✅ 2. 팝업 쿠키 확인
+  if (document.cookie.indexOf("hidePopup=true") < 0) {
+    document.getElementById("popup").style.display = "flex";
+  }
+
+  document.getElementById("closePopup").onclick = function () {
+    if (document.getElementById("hideToday").checked) {
+      const date = new Date();
+      date.setDate(date.getDate() + 1); // 1일간 유지
+      document.cookie = "hidePopup=true; path=/; expires=" + date.toUTCString();
+    }
+    document.getElementById("popup").style.display = "none";
+  };
+};
+
+</script>
+ </body>
+</html>
